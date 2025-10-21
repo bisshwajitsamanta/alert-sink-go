@@ -2,6 +2,7 @@ package accept
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"time"
 )
@@ -34,6 +35,11 @@ func ParseAlerts(jsonStream io.Reader) ([]SingleEvent, error) {
 	decodeIncomingMessage := json.NewDecoder(jsonStream)
 	var decodedMessage Events
 	err := decodeIncomingMessage.Decode(&decodedMessage)
+
+	if err != nil {
+		fmt.Println("Json Decode Failure invalid Json")
+		return nil, err
+	}
 
 	//Empty Slice of Events
 	events := []SingleEvent{}
